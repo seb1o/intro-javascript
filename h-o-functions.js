@@ -139,16 +139,47 @@ function filter(array, filteringFunction){
 
 }
 
+
+
+// find
 function isEven(nbr){
-    if(nbr % 2 === 0){
-        return true
-    }else{
-        return false
-    }
+    // if(nbr % 2 === 0){
+    //     return true
+    // }else{
+    //     return false
+    // }
+    return nbr % 2 === 0
 }
+
+console.log(testArray.filter(isEven));
+console.log(testArray.find(isEven))
+
+//some
+
+console.log(testArray.some(isEven))
+
+//every
+console.log(testArray.every(isEven))
+
 
 const  newArray12 = filter(testArray, isEven);
 console.log('new keep evem', newArray12)
+//sort
+
+function sortingFunction(first, second){
+ if (first < second) {
+    return 1;
+ }else if(first > second){
+    return -1;
+ }else{
+    return 0;
+ }
+}
+
+
+
+testArray.sort();
+console.log(testArray)
 
 
 ///funzione che tiene dentro testArray2 tutte le parole piu lunghe di 6 caratteri
