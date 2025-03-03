@@ -1,53 +1,53 @@
-class Human{
-    constructor(name, surname, yob, nationality, gender){
+class Human {
+    constructor(name, surname, yob, nationality, gender) {
         this.name = name;
         this.surname = surname;
         this.yob = yob;
         this.nationality = nationality;
-        this.gender = gender; 
+        this.gender = gender;
     }
-    getAge(){
+    getAge() {
         const now = new Date();
         const year = now.getFullYear();
         const age = year - this.yob;
         return age;
     }
-    toString(){ 
+    toString() {
         const humanStr = `Nome: ${this.name}
     Cognome: ${this.surname}
     Età: ${this.getAge()} 
     Nationality: ${this.nationality}
     Gender: ${this.gender}
     `
-    return humanStr;
+        return humanStr;
 
     }
 
 }
 
 class Student extends Human {
-    constructor(name, surname, yob, nationality, gender, marks =[]){
-      super(name, surname, yob, nationality, gender)
+    constructor(name, surname, yob, nationality, gender, marks = []) {
+        super(name, surname, yob, nationality, gender)
         this.marks = marks;
     }
 
-    addMark(mark){
+    addMark(mark) {
         this.marks.push(mark)
     }
 
-    getBestMark(){
+    getBestMark() {
         let best = 0;
         for (const mark of this.marks) {
-            if(mark > best){
+            if (mark > best) {
                 best = mark;
             }
-            
+
         }
         return best
     }
 
-    calculateMean(){
-        if(this.marks.length === 0){
+    calculateMean() {
+        if (this.marks.length === 0) {
             return -1;
         }
         let sumOfMarks = 0;
@@ -56,24 +56,24 @@ class Student extends Human {
             const mark = this.marks[i];
 
             sumOfMarks += mark;
-            
+
         }
-        const mean = sumOfMarks/ this.marks.length;
+        const mean = sumOfMarks / this.marks.length;
         return mean;
 
     }
-    
 
-    toString(){
+
+    toString() {
         const studentStr = `${super.toString()}
         Media: ${this.calculateMean()}`
         return studentStr;
     }
-    compareTo(otherStudent){
+    compareTo(otherStudent) {
         const name1 = this.name;
         const name2 = otherStudent.name;
 
-        if(name1 === name2){
+        if (name1 === name2) {
             const yob1 = this.yob;
             const yob2 = otherStudent.yob;
             return yob1 - yob2;
@@ -87,38 +87,44 @@ class Teacher extends Human {
         super(name, surname, yob, nationality, gender)
         this.subject = subject;
         this.students = students;
-        
+
     }
-    bestStudent(){
-        let bestStudent; 
+    bestStudent() {
+        let bestStudent;
         let bestMean = 0;
         for (const student of this.students) {
             const currentStudMean = student.calculateMean();
 
-            if(currentStudMean > bestMean){
+            if (currentStudMean > bestMean) {
                 bestStudent = student;
                 bestMean = currentStudMean;
-                
+
             }
-            
+
         }
         return bestStudent
     }
 
-    studentMean(){
+    studentMean() {
         let sumOfMeans = 0;
-        for (const student of this.students) {
-            sumOfMeans += student.calculateMean()
-            
-            
-        }
-        const meanOfSumOfMeans = sumOfMeans/this.students.length
+        let totalStudents = 0;
+        
+
+
+            for (const student of this.students) {
+                sumOfMeans += student.calculateMean()
+
+
+            }
+        
+        const meanOfSumOfMeans = sumOfMeans / this.students.length
         return meanOfSumOfMeans
     }
 
 
 
-    toString(){
+
+    toString() {
         const teacherStr = `${super.toString()}
         Materia: ${this.subject}
         Numero di studenti: ${this.students.length}`
@@ -132,28 +138,63 @@ class Principal extends Human {
         this.schoolName = schoolName;
         this.teachers = teachers
 
-}
-bestTeacher(){
+    }
+    bestTeacher() {let bestTeacher; 
+        let bestMean = 0;
+        for (const teacher of this.teachers) {
+            const currentTeacherMean = teacher.studentMean();
+            if(currentTeacherMean > bestMean){
+                bestTeacher = teacher;
+                bestMean = currentTeacherMean;
+            }
+        }
+        return bestTeacher;
 
-}
-bestStudent(){
-    let bestStudent; 
+
+
+    }
+    bestStudent() {
+        let bestStudent;
         let bestMean = 0;
         for (const teacher of this.teachers) {
             for (const student of this.students) {
-                
+
             }
             const currentStudMean = student.calculateMean();
 
-            if(currentStudMean > bestMean){
+            if (currentStudMean > bestMean) {
                 bestStudent = student;
                 bestMean = currentStudMean;
-                
+
             }
-            
+
         }
         return bestStudent
-}
+    }
+
+
+    studentMean() {
+        let sumOfMeans = 0;
+        let totalStudents = 0;
+        for (const teacher of this.teachers) {
+
+
+            for (const student of this.students) {
+                sumOfMeans += student.calculateMean()
+                totalStudents++
+
+            }
+        }
+        const meanOfSumOfMeans = sumOfMeans / totalStudents
+        return meanOfSumOfMeans
+    }
+
+    toString(){
+        const principalStr = `${super.toString()}
+        Nome della scuola: ${this.schoolName}
+        Numero di insegnanti: ${this.teachers.length}`;
+        return principalStr;
+    
 }
 
 
@@ -162,7 +203,7 @@ const student1 = new Student('laura', 'mazza', 1984, 'it', 'f', [8, 7]);
 const student2 = new Student('eusebio', 'veizi', 1993, 'alb', 'm', [6, 6]);
 const students = [student1, student2];
 const teacher = new Teacher('andrea', 'asioli', 1978, 'it', 'm', 'CS', students)
-const bestStudent = teacher.bestStudent(); 
+const bestStudent = teacher.bestStudent();
 const studentMean = teacher.studentMean();
 console.log('the best student is :', bestStudent.toString())
 console.log('StudentsMean is :', studentMean)
