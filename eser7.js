@@ -219,3 +219,8 @@ console.log(student1.toString())
 // -il nome della scuola
 //4)aggiungere al principal due funzioni: bestTeacher e bestStudent
 
+
+
+
+
+
